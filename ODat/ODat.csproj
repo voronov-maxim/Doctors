@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OdataToEntity" Version="2.1.0" />
-    <PackageReference Include="OdataToEntity.EfCore" Version="2.1.0" />
+    <PackageReference Include="OdataToEntity" Version="2.3.0" />
+    <PackageReference Include="OdataToEntity.EfCore" Version="2.3.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" />
   </ItemGroup>
 

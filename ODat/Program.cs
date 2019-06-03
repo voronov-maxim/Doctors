@@ -1,6 +1,9 @@
 ﻿using GomoiuWeb.Shared.Data.DB;
+using Microsoft.OData.Edm;
 using OdataToEntity;
 using OdataToEntity.EfCore;
+using OdataToEntity.Query;
+using OdataToEntity.Query.Builder;
 using System;
 using System.IO;
 using System.Text;
@@ -15,8 +18,11 @@ namespace ODat
         {
             //Create adapter data access, where OrderContext your DbContext
             var dataAdapter = new OeEfCoreDataAdapter<AppDBContext>();
+            IEdmModel edmModel = dataAdapter.BuildEdmModelFromEfCoreModel();
+            var modelBoundBuilder = new OeModelBoundFluentBuilder(edmModel);
+            modelBoundBuilder.EntitySet<ClientAppointments>("ClientAppointments").EntityType.Select(SelectExpandType.Disabled, "Id", "DoctorId");
             //Create query parser
-            var parser = new OeParser(new Uri("http://dummy"), dataAdapter.BuildEdmModelFromEfCoreModel());
+            var parser = new OeParser(new Uri("http://dummy"), edmModel, modelBoundBuilder.BuildProvider());
             //Query
             var uri = new Uri("http://dummy/Doctors?$expand=ClientAppointments&$select=Name,ClientAppointments");
             //The result of the query
